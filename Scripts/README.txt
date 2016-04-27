@@ -9,7 +9,8 @@ gcloud compute instances create xsd1 --zone us-central1-c --network personal --i
 
 gcloud compute instances create xsd1 --zone us-central1-c --network personal --image ubuntu-14-04 --machine-type g1-small --boot-disk-type pd-standard --boot-disk-size 10GB --no-boot-disk-auto-delete --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
 
-gcloud compute instances create xsd1 --zone us-central1-c --network personal --image ubuntu-15-10 --machine-type g1-small --boot-disk-type pd-standard --boot-disk-size 10GB --no-boot-disk-auto-delete --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh, xsdkey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc
+gcloud compute instances create xsd1 --zone us-central1-c --network personal --image "/ubuntu-os-cloud/ubuntu-1604-xenial-v20160420c" --machine-type g1-small --boot-disk-type pd-standard --boot-disk-size 10GB --no-boot-disk-auto-delete --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
+
 //nuke
 gcloud compute instances delete xsd1 --zone us-central1-c
 
