@@ -9,7 +9,7 @@ gcloud compute instances create xsd1 --zone us-central1-c --network personal --i
 
 gcloud compute instances create xsd1 --zone us-central1-c --network personal --image ubuntu-14-04 --machine-type g1-small --boot-disk-type pd-standard --boot-disk-size 10GB --no-boot-disk-auto-delete --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
 
-gcloud compute instances create xsd1 --zone us-central1-c --network personal --image "/ubuntu-os-cloud/ubuntu-1604-xenial-v20160420c" --machine-type g1-small --boot-disk-type pd-standard --boot-disk-size 10GB --no-boot-disk-auto-delete --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
+gcloud compute instances create xsd1 --zone us-central1-c --network personal --image "/ubuntu-os-cloud/ubuntu-1604-xenial-v20160420c" --machine-type f1-micro --boot-disk-type pd-standard --boot-disk-size 10GB --no-boot-disk-auto-delete --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
 
 //nuke
 gcloud compute instances delete xsd1 --zone us-central1-c
@@ -53,6 +53,8 @@ gcloud compute instances add-metadata xsd1 --metadata-from-file privatekey=C:\Us
 
 lxc launch ubuntu:14.04 xsd1-1
 
+//log into container
+lxc exec xsd1-1 /bin/bash
 
 //gpg
 //see https://www.madboa.com/geek/gpg-quickstart/

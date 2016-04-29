@@ -21,6 +21,9 @@ if [ "$HOST_INSTALL" == 'true' ]; then
 fi
 if [ "$XSD_K1_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/XsdK-1-Install.sh
-        lxc file push ./XsdK-1-Install.sh xsd1-1/.
-        lxc exec xsd1-1 ./XsdK-1-Install.sh
+		sudo chmod +x XsdK-1-Install.sh
+        lxc file push ./XsdK-1-Install.sh xsd1-1/root/
+		curl -o instance-config-key.asc "http://metadata.google.internal/computeMetadata/v1/xsd1-1/attributes/xsdkey"  -H "Metadata-Flavor: Google"
+		lxc file push ./instance-config-key.asc xsd1-1/root/
+        #lxc exec xsd1-1 /root/XsdK-1-Install.sh
 fi
