@@ -4,15 +4,15 @@
 #see for log /var/log/startupscript.log     
 #rerun me sudo /usr/share/google/run-startup-scripts
 #set true or no                                                                    
-HOST_INSTALL="no"
+HOST_INSTALL="true"
 XSD_K1_INSTALL="true"
 echo Script run parameters
 echo HOST_INSTALL: "$HOST_INSTALL"
 echo XSD_K-1_INSTALL: "$XSD_K1_INSTALL"
 if [ "$HOST_INSTALL" == 'true' ]; then
         #download only use -d with apt-get                                                                      
-        sudo apt-get -q -y -u update
-        sudo apt-get -q -y -u -V dist-upgrade
+        #sudo apt-get -q -y -u update
+        #sudo apt-get -q -y -u -V dist-upgrade
 		#emacs                                                                                                  
         sudo apt-get -q -y -u -V install emacs24-nox
         #lxd system
