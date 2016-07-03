@@ -5,7 +5,7 @@
 #rerun me sudo /usr/share/google/run-startup-scripts
 #set true or no                                                                    
 HOST_INSTALL="true"
-XSD_K1_INSTALL="true"
+XSD_K1_INSTALL="false"
 echo Script run parameters
 echo HOST_INSTALL: "$HOST_INSTALL"
 echo XSD_K-1_INSTALL: "$XSD_K1_INSTALL"

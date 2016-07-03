@@ -25,6 +25,7 @@
     <Compile Include="Scripts.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="XsdK-1\lxdnetwork.cfg" />
     <Content Include="Nothing.sh" />
     <Content Include="README.txt" />
     <Content Include="XsdK-1\brokeravm.com.asc" />
