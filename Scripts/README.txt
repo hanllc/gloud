@@ -8,7 +8,7 @@ gcloud compute instances list
 
 //eventual production type --machine-type g1-small
 //may want to add at somepoint --no-boot-disk-auto-delete
-
+//removed after adding to see if fix routing
 gcloud compute instances create xsd1 --zone us-central1-c --network personal --image "/ubuntu-os-cloud/ubuntu-1604-xenial-v20160420c" --machine-type f1-micro --boot-disk-type pd-standard --boot-disk-size 10GB --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
 
 //nuke
@@ -46,7 +46,7 @@ gcloud compute instances add-metadata xsd1 --metadata-from-file startup-script=C
 gcloud compute instances add-metadata xsd1 --metadata-from-file privatekey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc --zone us-central1-c
 
 //add project metadata
-gcloud compute project-info add-metadata -metadata-from-file="xsdkey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc --zone us-central1-c"
+gcloud compute project-info add-metadata --metadata-from-file=xsdkey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc
 
 
 

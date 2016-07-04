@@ -15,9 +15,16 @@ if [ "$HOST_INSTALL" == 'true' ]; then
         #sudo apt-get -q -y -u -V dist-upgrade
 		#emacs                                                                                                  
         sudo apt-get -q -y -u -V install emacs24-nox
+		#bridge for containers - only needed without NATed lxdbr0 - was never able to get pure bridge or macvlan working
+		#sudo apt-get install bridge-utils
+		# https://github.com/tych0/tycho.ws/blob/master/src/blog/2016/04/lxdbr0.md
         #lxd system
-        sudo apt-get -q -y -u -V install lxd
+        #sudo apt-get -q -y -u -V install lxd
         sudo lxd init --auto --storage-backend=dir
+		sudo wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/lxd-bridge
+		sudo mv /etc/default/lxd-bridge /etc/default/orig-lxd-bridge
+		sudo cp ./lxd-bridge /etc/default/lxd-bridge
+		sudo service lxd-bridge stop && sudo service lxd restart
         lxc launch ubuntu:16.04 xsd1-1
 fi
 if [ "$XSD_K1_INSTALL" == 'true' ]; then
@@ -25,7 +32,7 @@ if [ "$XSD_K1_INSTALL" == 'true' ]; then
 		sudo chmod +x XsdK-1-Install.sh
         lxc file push ./XsdK-1-Install.sh xsd1-1/root/
 		
-		curl -o instance-config-key.asc "http://metadata.google.internal/computeMetadata/v1/xsd1-1/attributes/xsdkey"  -H "Metadata-Flavor: Google"
+		curl -o instance-config-key.asc http://metadata.google.internal/computeMetadata/v1/project/attributes/xsdkey -H "Metadata-Flavor: Google"
 		lxc file push ./instance-config-key.asc xsd1-1/root/
 
 		lxc exec xsd1-1 ls -l /etc/network.d/
