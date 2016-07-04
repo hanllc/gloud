@@ -11,13 +11,13 @@ chown -R www-data:www-data /pdata/web/wehrli.org
 chmod 755 /pdata/web
 
 curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gcloud/master/Scripts/XsdK-1/brokeravm.com.asc
-#gpg --allow-secret-key-import --import /root/instance-config-key.asc
-#gpg --output brokeravm.com --decrypt brokeravm.com.asc
+gpg --allow-secret-key-import --import /root/instance-config-key.asc
+gpg --output brokeravm.com --decrypt brokeravm.com.asc
 
-#cp brokeravm.com /etc/nginx/sites-available/brokeravm.com
-#ln -s /etc/nginx/sites-available/brokeravm.com /etc/nginx/sites-enabled/brokeravm.com
+cp brokeravm.com /etc/nginx/sites-available/brokeravm.com
+ln -s /etc/nginx/sites-available/brokeravm.com /etc/nginx/sites-enabled/brokeravm.com
 
 
-#mv /etc/nginx/sites-enabled/default /root
+mv /etc/nginx/sites-enabled/default /root
 
-#service nginx restart
+service nginx restart
