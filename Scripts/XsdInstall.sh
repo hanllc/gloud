@@ -4,7 +4,7 @@
 #see for log /var/log/startupscript.log     
 #rerun me sudo /usr/share/google/run-startup-scripts
 #set true or no                                                                    
-HOST_INSTALL="false"
+HOST_INSTALL="true"
 XSD_K1_INSTALL="true"
 echo Script run parameters
 echo HOST_INSTALL: "$HOST_INSTALL"
@@ -33,5 +33,5 @@ if [ "$XSD_K1_INSTALL" == 'true' ]; then
         lxc file push ./XsdK-1-Install.sh xsd1-1/root/
 		curl -o instance-config-key.asc http://metadata.google.internal/computeMetadata/v1/project/attributes/xsdkey -H "Metadata-Flavor: Google"
 		lxc file push ./instance-config-key.asc xsd1-1/root/
-		#lxc exec xsd1-1 /root/XsdK-1-Install.sh
+		lxc exec xsd1-1 /root/XsdK-1-Install.sh
 fi

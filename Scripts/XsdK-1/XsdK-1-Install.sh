@@ -10,7 +10,8 @@ chown -R www-data:www-data /pdata/web/brokeravm.com
 chown -R www-data:www-data /pdata/web/wehrli.org
 chmod 755 /pdata/web
 
-curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gcloud/master/Scripts/XsdK-1/brokeravm.com.asc
+curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/brokeravm.com.asc
+
 gpg --allow-secret-key-import --import /root/instance-config-key.asc
 gpg --output brokeravm.com --decrypt brokeravm.com.asc
 
