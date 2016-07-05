@@ -9,7 +9,7 @@ gcloud compute instances list
 //eventual production type --machine-type g1-small
 //may want to add at somepoint --no-boot-disk-auto-delete
 //removed after adding to see if fix routing
-gcloud compute instances create xsd1 --zone us-central1-c --network personal --image "/ubuntu-os-cloud/ubuntu-1604-xenial-v20160420c" --machine-type f1-micro --boot-disk-type pd-standard --boot-disk-size 10GB --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
+gcloud compute instances create xsd1 --zone us-central1-c --network personal --can-ip-forward --image "/ubuntu-os-cloud/ubuntu-1604-xenial-v20160420c" --machine-type f1-micro --boot-disk-type pd-standard --boot-disk-size 10GB --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
 
 //nuke
 gcloud compute instances delete xsd1 --zone us-central1-c

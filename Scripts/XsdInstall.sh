@@ -5,10 +5,12 @@
 #rerun me sudo /usr/share/google/run-startup-scripts
 #set true or no                                                                    
 HOST_INSTALL="true"
-XSD_K1_INSTALL="true"
-echo Script run parameters
+XSD_K1_INSTALL="false"
+XSD_K1_PORTFWD="false"
+echo XSD startup script run parameters
 echo HOST_INSTALL: "$HOST_INSTALL"
 echo XSD_K-1_INSTALL: "$XSD_K1_INSTALL"
+echo XSD_K-1_PORTFWD: "$XSD_K1_PORTFWD"
 if [ "$HOST_INSTALL" == 'true' ]; then
         #download only use -d with apt-get                                                                      
         #sudo apt-get -q -y -u update
@@ -25,7 +27,7 @@ if [ "$HOST_INSTALL" == 'true' ]; then
 		sudo cp ./lxd-bridge /etc/default/lxd-bridge
 		sudo lxd init --auto --storage-backend=dir
 		#sudo service lxd-bridge stop && sudo service lxd restart
-        lxc launch ubuntu:16.04 xsd1-1
+        #lxc launch ubuntu:16.04 xsd1-1
 fi
 if [ "$XSD_K1_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/XsdK-1-Install.sh
@@ -34,4 +36,14 @@ if [ "$XSD_K1_INSTALL" == 'true' ]; then
 		curl -o instance-config-key.asc http://metadata.google.internal/computeMetadata/v1/project/attributes/xsdkey -H "Metadata-Flavor: Google"
 		lxc file push ./instance-config-key.asc xsd1-1/root/
 		lxc exec xsd1-1 /root/XsdK-1-Install.sh
+fi
+if [ "$XSD_K1_PORTFWD" == 'true' ]; then
+		# BE SURE to make sure google network tag is empty or correct
+		# https://cloud.google.com/compute/docs/networking#natgateway
+		# http://serverfault.com/questions/780082/iptables-nat-to-lxd-containers
+		# http://serverfault.com/questions/689930/linux-container-bridge-port-forwarding
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 80 -j DNAT --to-destination 192.168.198.202:80
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 443 -j DNAT --to-destination 192.168.198.202:443
+		# sudo iptables -t nat -L -n -v
+		# use -D to remove
 fi

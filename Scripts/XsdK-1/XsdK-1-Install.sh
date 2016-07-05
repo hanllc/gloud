@@ -10,6 +10,10 @@ chown -R www-data:www-data /pdata/web/brokeravm.com
 chown -R www-data:www-data /pdata/web/wehrli.org
 chmod 755 /pdata/web
 
+mkdir -p /etc/nginx/ssl/brokeravm.com
+# ssl_certificate     /etc/nginx/ssl/brokeravm.com/server.crt;
+# ssl_certificate_key /etc/nginx/ssl/brokeravm.com/server.key;
+# http://nginx.org/en/docs/http/configuring_https_servers.html#chains
 curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/brokeravm.com.asc
 
 gpg --allow-secret-key-import --import /root/instance-config-key.asc
