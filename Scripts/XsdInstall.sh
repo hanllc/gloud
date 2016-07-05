@@ -33,12 +33,14 @@ if [ "$XSD_K1_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/XsdK-1-Install.sh
 		sudo chmod +x XsdK-1-Install.sh
         lxc file push ./XsdK-1-Install.sh xsd1-1/root/
+		curl -o brokeravm-key.asc http://metadata.google.internal/computeMetadata/v1/project/attributes/brokeravmkey -H "Metadata-Flavor: Google"
+		lxc file push ./brokeravm-key.asc xsd1-1/root/
 		curl -o instance-config-key.asc http://metadata.google.internal/computeMetadata/v1/project/attributes/xsdkey -H "Metadata-Flavor: Google"
 		lxc file push ./instance-config-key.asc xsd1-1/root/
 		lxc exec xsd1-1 /root/XsdK-1-Install.sh
 fi
 if [ "$XSD_K1_PORTFWD" == 'true' ]; then
-		# BE SURE to make sure google network tag is empty or correct
+		# BE SURE to make sure google subnet rules network tag is empty or correct - burned hours on that
 		# https://cloud.google.com/compute/docs/networking#natgateway
 		# http://serverfault.com/questions/780082/iptables-nat-to-lxd-containers
 		# http://serverfault.com/questions/689930/linux-container-bridge-port-forwarding

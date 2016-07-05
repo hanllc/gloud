@@ -46,8 +46,8 @@ gcloud compute instances add-metadata xsd1 --metadata-from-file startup-script=C
 gcloud compute instances add-metadata xsd1 --metadata-from-file privatekey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc --zone us-central1-c
 
 //add project metadata
-gcloud compute project-info add-metadata --metadata-from-file=xsdkey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc
-
+gcloud compute project-info add-metadata --metadata-from-file xsdkey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc
+gcloud compute project-info add-metadata --metadata-from-file brokeravmkey=C:\Users\wehrli\ZAccess\StartSSL\brokeravm\brokeravm-privkey.txt
 
 
 //LXD
