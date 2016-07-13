@@ -28,6 +28,7 @@ if [ "$HOST_INSTALL" == 'true' ]; then
 		sudo lxd init --auto --storage-backend=dir
 		#sudo service lxd-bridge stop && sudo service lxd restart
         #lxc launch ubuntu:16.04 xsd1-1
+		#lxc launch ubuntu:16.04 xsd1-2
 fi
 if [ "$XSD_K1_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/XsdK-1-Install.sh
@@ -48,4 +49,10 @@ if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 443 -j DNAT --to-destination 192.168.198.202:443
 		# sudo iptables -t nat -L -n -v
 		# use -D to remove
+fi
+if [ "$XSD_K2_INSTALL" == 'true' ]; then
+        wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-2/XsdK-2-Install.sh
+		sudo chmod +x XsdK-2-Install.sh
+        lxc file push ./XsdK-2-Install.sh xsd1-2/root/
+		lxc exec xsd1-2 /root/XsdK-2-Install.sh
 fi

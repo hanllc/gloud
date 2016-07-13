@@ -25,9 +25,10 @@
     <Compile Include="Scripts.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="XsdK-1\lxdnetwork.cfg" />
+    <Content Include="lxd-bridge" />
     <Content Include="Nothing.sh" />
     <Content Include="README.txt" />
+    <Content Include="XsdK-1\1_brokeravm.com_bundle.crt" />
     <Content Include="XsdK-1\brokeravm.com.asc" />
     <Content Include="XsdK-1\XsdK-1-Install.sh" />
     <Content Include="XsdInstall.sh" />

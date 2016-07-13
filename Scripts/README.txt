@@ -82,3 +82,21 @@ gpg --allow-secret-key-import --import private-xsdlive.asc
 //nuke keys - use caution or you lose all encrypted data with these keys
 gpg --delete-secret-keys xsdlive
 gpg --delete-key xsdlive
+
+
+//nginx
+sudo nginx -s reload
+nginx -t
+## OR set path to config file and test for the errors ##
+nginx -c /etc/nginx/nginx.conf -t
+
+sudo tail -f /var/log/nginx/error.log 
+sudo tail -f /var/log/nginx/brokeravm.error.log;
+
+sudo service nginx start
+sudo service nginx stop
+sudo service nginx restart
+OR
+sudo /etc/init.d/nginx start
+sudo /etc/init.d/nginx stop
+sudo /etc/init.d/nginx restart
