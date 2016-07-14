@@ -51,6 +51,10 @@ if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 		# use -D to remove
 fi
 if [ "$XSD_K2_INSTALL" == 'true' ]; then
+# added 512m swap to HOSt to get polymer-cli to install in the container
+# hopefully only needed one time - did not make permanent
+# https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
+
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-2/XsdK-2-Install.sh
 		sudo chmod +x XsdK-2-Install.sh
         lxc file push ./XsdK-2-Install.sh xsd1-2/root/
