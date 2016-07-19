@@ -41,12 +41,17 @@ if [ "$XSD_K1_INSTALL" == 'true' ]; then
 		lxc exec xsd1-1 /root/XsdK-1-Install.sh
 fi
 if [ "$XSD_K1_PORTFWD" == 'true' ]; then
+		# currently these get blown away on a reboot
 		# BE SURE to make sure google subnet rules network tag is empty or correct - burned hours on that
 		# https://cloud.google.com/compute/docs/networking#natgateway
 		# http://serverfault.com/questions/780082/iptables-nat-to-lxd-containers
 		# http://serverfault.com/questions/689930/linux-container-bridge-port-forwarding
+		#xsd1-1
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 80 -j DNAT --to-destination 192.168.198.202:80
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 443 -j DNAT --to-destination 192.168.198.202:443
+		#xsd1-2
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 8080 -j DNAT --to-destination 192.168.198.46:80
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 2222 -j DNAT --to-destination 192.168.198.46:22
 		# sudo iptables -t nat -L -n -v
 		# use -D to remove
 fi
