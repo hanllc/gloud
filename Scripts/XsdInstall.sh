@@ -27,8 +27,15 @@ if [ "$HOST_INSTALL" == 'true' ]; then
 		sudo cp ./lxd-bridge /etc/default/lxd-bridge
 		sudo lxd init --auto --storage-backend=dir
 		#sudo service lxd-bridge stop && sudo service lxd restart
+		#prod web
         #lxc launch ubuntu:16.04 xsd1-1
+		#dev web
 		#lxc launch ubuntu:16.04 xsd1-2
+		#postgres all
+		#lxc launch ubuntu:16.04 xsd1-3
+		#docker
+		#https://www.stgraber.org/2016/04/13/lxd-2-0-docker-in-lxd-712/
+		#lxc launch ubuntu:16.04 xsd1-4 -p default -p docker
 fi
 if [ "$XSD_K1_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/XsdK-1-Install.sh
@@ -64,4 +71,16 @@ if [ "$XSD_K2_INSTALL" == 'true' ]; then
 		sudo chmod +x XsdK-2-Install.sh
         lxc file push ./XsdK-2-Install.sh xsd1-2/root/
 		lxc exec xsd1-2 /root/XsdK-2-Install.sh
+fi
+if [ "$XSD_K3_INSTALL" == 'true' ]; then
+        wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-3/XsdK-3-Install.sh
+		sudo chmod +x XsdK-3-Install.sh
+        lxc file push ./XsdK-3-Install.sh xsd1-3/root/
+		lxc exec xsd1-3 /root/XsdK-3-Install.sh
+fi
+if [ "$XSD_K4_INSTALL" == 'true' ]; then
+        wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-4/XsdK-4-Install.sh
+		sudo chmod +x XsdK-4-Install.sh
+        lxc file push ./XsdK-4-Install.sh xsd1-3/root/
+		lxc exec xsd1-4 /root/XsdK-4-Install.sh
 fi

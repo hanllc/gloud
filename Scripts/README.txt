@@ -100,3 +100,11 @@ OR
 sudo /etc/init.d/nginx start
 sudo /etc/init.d/nginx stop
 sudo /etc/init.d/nginx restart
+
+
+//docker
+#https://www.stgraber.org/2016/04/13/lxd-2-0-docker-in-lxd-712/
+docker run --detach --name app carinamarina/hello-world-app
+docker run --detach --name web --link app:helloapp -p 80:5000 carinamarina/hello-world-web
+
+docker run -it ubuntu

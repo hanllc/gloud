@@ -1,6 +1,7 @@
 #!/bin/bash
 #apt-get -q -y -u update
 sudo apt-get -q -y -u -V install emacs24-nox
+sudo apt-get install traceroute
 sudo apt-get install git
 
 sudo apt-get install nodejs
@@ -28,7 +29,21 @@ bower --allow-root install
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 
-#ssh-keygen -t rsa -b 4096 -C "comment" -P "examplePassphrase" -f "desired pathAndName" -q
-ssh-keygen -t rsa -b 4096 -N "" -f "/root/.ssh/key4x" -q
-cat /root/.ssh/key4x.pub >> /root/.ssh/authorized_keys
+#initial setup; now stored in source control 
+#ssh-keygen -t rsa -b 4096 -N "" -f "/root/.ssh/key4x" -q
+curl -o /root/.ssh/key4x.pub https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-2/key4x.pub
+cat /root/key4x.pub >> /root/.ssh/authorized_keys
+
+#worked with no added configuration - nice
+sudo apt-get install xterm
+
+#get chrome
+# ref http://www.ubuntumaniac.com/2016/02/install-google-chrome-4802564116-on.html
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb
+sudo apt-get install -f
+
+#MANUAL STEP hack chrome start to make run at root
+# https://ubuntuforums.org/showthread.php?t=1743565
 

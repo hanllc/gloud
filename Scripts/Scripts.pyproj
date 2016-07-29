@@ -33,8 +33,12 @@
     <Content Include="XsdK-1\XsdK-1-Install.sh" />
     <Content Include="XsdInstall.sh" />
     <Content Include="XsdK-2\XsdK-2-Install.sh" />
+    <Content Include="XsdK-3\XsdK-3-Install.sh" />
+    <Content Include="XsdK-4\XsdK-4-Install.sh" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="XsdK-4\" />
+    <Folder Include="XsdK-3\" />
     <Folder Include="XsdK-2\" />
     <Folder Include="XsdK-1\" />
   </ItemGroup>
