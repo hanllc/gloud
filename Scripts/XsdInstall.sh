@@ -57,6 +57,7 @@ if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 		#xsd1-1
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 80 -j DNAT --to-destination 192.168.198.202:80
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 443 -j DNAT --to-destination 192.168.198.202:443
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 2201 -j DNAT --to-destination 192.168.198.202:22
 		#xsd1-2
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 8080 -j DNAT --to-destination 192.168.198.46:80
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 2222 -j DNAT --to-destination 192.168.198.46:22

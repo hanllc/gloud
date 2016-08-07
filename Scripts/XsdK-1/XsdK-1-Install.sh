@@ -2,6 +2,15 @@
 #apt-get -q -y -u update
 apt-get -q -y -u -V install nginx
 
+#appears to exist already on gcp
+#mkdir ~/.ssh
+#chmod 700 ~/.ssh
+
+#initial setup; now stored in source control 
+#ssh-keygen -t rsa -b 4096 -N "" -f "/root/.ssh/key4x" -q
+curl -o /root/.ssh/key4x.pub https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/key4x.pub
+cat /root/.ssh/key4x.pub >> /root/.ssh/authorized_keys
+
 mkdir -p /pdata/web/xsdlive.com
 mkdir /pdata/web/brokeravm.com
 mkdir /pdata/web/wehrli.org
