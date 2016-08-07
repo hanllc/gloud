@@ -101,10 +101,43 @@ sudo /etc/init.d/nginx start
 sudo /etc/init.d/nginx stop
 sudo /etc/init.d/nginx restart
 
+//error info
+systemctl status nginx.service
 
 //docker
 #https://www.stgraber.org/2016/04/13/lxd-2-0-docker-in-lxd-712/
 docker run --detach --name app carinamarina/hello-world-app
 docker run --detach --name web --link app:helloapp -p 80:5000 carinamarina/hello-world-web
 
+docker run -i -t woodo04 /bin/bash
+
+#good docker practices
+#http://developers.redhat.com/blog/2016/02/24/10-things-to-avoid-in-docker-containers/
+#http://containertutorials.com/network/basic_network.html
+
 docker run -it ubuntu
+docker commit 175193ae8074 woodo01
+
+#remove all container but NOT images
+docker rm $(docker ps -aq)
+
+//view some net info for docker host
+ip addr
+
+//postgres
+//login on server
+sudo -u postgres psql postgres
+
+//login from client 
+psql -h 192.168.198.167 -U postgres -W
+psql -h xsd1-3.lxd -U postgres -W
+
+//odoo
+./odoo.py --config ./wehrli.org.conf --proxy-mode --xmlrpc-port=8071 --logfile /var/log/wehrli.org/odoo.log --db_user xxx --db_password xxx
+
+#this worked
+lxc exec xsd1-4 /bin/bash 
+docker run -p 8069:8069 wodoo05 /odoo/odoo.py --db_user xsdodoo --db_host 192.168.198.167
+docker run -p 8069:8069 wodoo05 /odoo/odoo.py --proxy-mode --xmlrpc-port=8069 --db_user xsdodoo --db_host 192.168.198.167
+
+#http://stackoverflow.com/questions/18504835/pil-decoder-jpeg-not-available-on-ubuntu-x64

@@ -36,6 +36,7 @@ if [ "$HOST_INSTALL" == 'true' ]; then
 		#docker
 		#https://www.stgraber.org/2016/04/13/lxd-2-0-docker-in-lxd-712/
 		#lxc launch ubuntu:16.04 xsd1-4 -p default -p docker
+		#lxc launch ubuntu:16.04 xsd1-5
 fi
 if [ "$XSD_K1_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/XsdK-1-Install.sh
@@ -59,6 +60,7 @@ if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 		#xsd1-2
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 8080 -j DNAT --to-destination 192.168.198.46:80
 		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 2222 -j DNAT --to-destination 192.168.198.46:22
+		#xsd1-4
 		# sudo iptables -t nat -L -n -v
 		# use -D to remove
 fi
@@ -83,4 +85,10 @@ if [ "$XSD_K4_INSTALL" == 'true' ]; then
 		sudo chmod +x XsdK-4-Install.sh
         lxc file push ./XsdK-4-Install.sh xsd1-3/root/
 		lxc exec xsd1-4 /root/XsdK-4-Install.sh
+fi
+if [ "$XSD_K5_INSTALL" == 'true' ]; then
+        wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-5/XsdK-5-Install.sh
+		sudo chmod +x XsdK-5-Install.sh
+        lxc file push ./XsdK-5-Install.sh xsd1-3/root/
+		lxc exec xsd1-5 /root/XsdK-5-Install.sh
 fi

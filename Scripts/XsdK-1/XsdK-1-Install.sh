@@ -35,3 +35,4 @@ ln -s /etc/nginx/sites-available/brokeravm.com /etc/nginx/sites-enabled/brokerav
 mv /etc/nginx/sites-enabled/default /root
 
 service nginx restart
+#systemctl status nginx.service
