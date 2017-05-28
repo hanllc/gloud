@@ -49,3 +49,8 @@ apt-get -q -y -u -V  install inetutils-ping
 apt-get -q -y -u -V  install traceroute
 
 
+#odoo filestore issue - docker related
+https://github.com/odoo/odoo/issues/9296
+
+
+

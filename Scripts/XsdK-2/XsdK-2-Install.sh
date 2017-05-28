@@ -1,3 +1,7 @@
+#RETIRED CONTAINER
+#outdate poymer version
+#remote xclients were too slow
+
 #!/bin/bash
 #apt-get -q -y -u update
 sudo apt-get -q -y -u -V install emacs24-nox

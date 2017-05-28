@@ -1,0 +1,18 @@
+--- /etc/sudoers        2016-07-04 18:20:46.775486000 +0000
++++ /etc/sudoers.dpkg-new       2017-01-20 16:03:57.000000000 +0000
+@@ -8,7 +8,7 @@
+ #
+ Defaults       env_reset
+ Defaults       mail_badpass
+-Defaults       secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
++Defaults       secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+ 
+ # Host alias specification
+ 
+@@ -28,5 +28,3 @@
+ # See sudoers(5) for more information on "#include" directives:
+ 
+ #includedir /etc/sudoers.d
+-wehrli ALL=NOPASSWD: ALL
+-joe ALL=NOPASSWD: ALL
+(END)

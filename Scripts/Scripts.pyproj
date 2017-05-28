@@ -28,6 +28,7 @@
     <Content Include="lxd-bridge" />
     <Content Include="Nothing.sh" />
     <Content Include="README.txt" />
+    <Content Include="upgrade.txt" />
     <Content Include="XsdK-1\1_brokeravm.com_bundle.crt" />
     <Content Include="XsdK-1\brokeravm.com.asc" />
     <Content Include="XsdK-1\XsdK-1-Install.sh" />
@@ -35,8 +36,10 @@
     <Content Include="XsdK-2\XsdK-2-Install.sh" />
     <Content Include="XsdK-3\XsdK-3-Install.sh" />
     <Content Include="XsdK-4\XsdK-4-Install.sh" />
+    <Content Include="XsdK-5\XsdK-5-Install.sh" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="XsdK-5\" />
     <Folder Include="XsdK-4\" />
     <Folder Include="XsdK-3\" />
     <Folder Include="XsdK-2\" />

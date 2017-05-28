@@ -60,6 +60,9 @@ lxc launch ubuntu:14.04 xsd1-1
 //log into container
 lxc exec xsd1-1 /bin/bash
 
+//see remote list
+lxc remote list
+
 //gpg
 //see https://www.madboa.com/geek/gpg-quickstart/
 
