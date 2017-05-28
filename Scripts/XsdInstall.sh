@@ -1,8 +1,10 @@
-#!/bin/bash                                                                                                     
+#!/bin/bash -x                                                                                                 
 #see for example-info http://howto.blbosti.com/2010/02/simple-ubuntu-install-script/                            
 #see for gcp docs on startup scripts https://cloud.google.com/compute/docs/startupscript                        
 #see for log /var/log/startupscript.log     
-#rerun me sudo /usr/share/google/run-startup-scripts
+#rerun me 
+#sudo google_metadata_script_runner --script-type startup
+
 #set true or no                                                                    
 HOST_INSTALL="false"
 XSD_K1_INSTALL="true"
