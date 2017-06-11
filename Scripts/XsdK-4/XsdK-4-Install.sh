@@ -3,7 +3,8 @@
 apt-get -q -y -u update
 #apt-get -q -y -u -V dist-upgrade
 apt-get -q -y -u -V install docker.io
-apt-get -q -y -u -V install emacs24-nox
+#apt-get -q -y -u -V install emacs24-nox
+apt-get -q -y -u -V install emacs25-nox
 
 #docker run -it ubuntu:16.04
 docker pull ubuntu:16.04

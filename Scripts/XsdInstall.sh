@@ -98,7 +98,7 @@ if [ "$XSD_K3_INSTALL" == 'true' ]; then
 		#lxc exec xsd1-3 /root/XsdK-3-Install.sh
 fi
 if [ "$XSD_K4_INSTALL" == 'true' ]; then
-		lxc launch ubuntu:17.04 xsd1-4
+		lxc launch ubuntu:16.04 xsd1-4
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-4/XsdK-4-Install.sh
 		sudo chmod +x XsdK-4-Install.sh
         lxc file push ./XsdK-4-Install.sh xsd1-4/root/
