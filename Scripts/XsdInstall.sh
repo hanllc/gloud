@@ -9,12 +9,14 @@
 HOST_INSTALL="false"
 XSD_K1_INSTALL="false"
 XSD_K1_PORTFWD="false"
-XSD_K3_INSTALL="true"
+XSD_K3_INSTALL="false"
+XSD_K4_INSTALL="true"
 echo XSD startup script run parameters
 echo HOST_INSTALL: "$HOST_INSTALL"
 echo XSD_K-1_INSTALL: "$XSD_K1_INSTALL"
 echo XSD_K-1_PORTFWD: "$XSD_K1_PORTFWD"
 echo XSD_K-3_INSTALL: "$XSD_K3_INSTALL"
+echo XSD_K-4_INSTALL: "$XSD_K4_INSTALL"
 
 if [ "$HOST_INSTALL" == 'true' ]; then
         #download only use -d with apt-get                                                                      
@@ -96,10 +98,11 @@ if [ "$XSD_K3_INSTALL" == 'true' ]; then
 		#lxc exec xsd1-3 /root/XsdK-3-Install.sh
 fi
 if [ "$XSD_K4_INSTALL" == 'true' ]; then
+		lxc launch ubuntu:17.04 xsd1-4
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-4/XsdK-4-Install.sh
 		sudo chmod +x XsdK-4-Install.sh
         lxc file push ./XsdK-4-Install.sh xsd1-3/root/
-		lxc exec xsd1-4 /root/XsdK-4-Install.sh
+		#lxc exec xsd1-4 /root/XsdK-4-Install.sh
 fi
 if [ "$XSD_K5_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-5/XsdK-5-Install.sh
