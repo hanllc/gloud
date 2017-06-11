@@ -19,6 +19,9 @@ chown -R www-data:www-data /pdata/web/brokeravm.com
 chown -R www-data:www-data /pdata/web/wehrli.org
 chmod 755 /pdata/web
 
+cd /pdata/web/
+git clone https://github.com/hanllc/mrk.brokeravm.com.git brokeravm.com
+
 mkdir -p /etc/nginx/ssl/brokeravm.com
 # ssl_certificate     /etc/nginx/ssl/brokeravm.com/server.crt;
 # ssl_certificate_key /etc/nginx/ssl/brokeravm.com/server.key;

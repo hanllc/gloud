@@ -38,9 +38,11 @@ gcloud compute instances detach-disk xsd1 --disk xsd1 --zone us-central1-c
 
 //set startup script for an instance
 gcloud compute instances add-metadata xsd1 --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh --zone us-central1-c
+gcloud compute instances add-metadata xsd2 --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh --zone us-central1-c
 
 //set NOTHING startup script for an instance
 gcloud compute instances add-metadata xsd1 --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\Nothing.sh --zone us-central1-c
+gcloud compute instances add-metadata xsd2 --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\Nothing.sh --zone us-central1-c
 
 //set metadata to contain private for an instance CONTAINER
 gcloud compute instances add-metadata xsd1 --metadata-from-file privatekey=C:\Users\wehrli\ZAccess\gpg\private-xsdlive.asc --zone us-central1-c

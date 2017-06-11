@@ -7,12 +7,15 @@
 
 #set true or no                                                                    
 HOST_INSTALL="false"
-XSD_K1_INSTALL="true"
+XSD_K1_INSTALL="false"
 XSD_K1_PORTFWD="false"
+XSD_K3_INSTALL="true"
 echo XSD startup script run parameters
 echo HOST_INSTALL: "$HOST_INSTALL"
 echo XSD_K-1_INSTALL: "$XSD_K1_INSTALL"
 echo XSD_K-1_PORTFWD: "$XSD_K1_PORTFWD"
+echo XSD_K-3_INSTALL: "$XSD_K3_INSTALL"
+
 if [ "$HOST_INSTALL" == 'true' ]; then
         #download only use -d with apt-get                                                                      
         #sudo apt-get -q -y -u update
@@ -49,7 +52,7 @@ if [ "$XSD_K1_INSTALL" == 'true' ]; then
 		lxc file push ./brokeravm-key.asc xsd1-1/root/
 		curl -o instance-config-key.asc http://metadata.google.internal/computeMetadata/v1/project/attributes/xsdkey -H "Metadata-Flavor: Google"
 		lxc file push ./instance-config-key.asc xsd1-1/root/
-		lxc exec xsd1-1 /root/XsdK-1-Install.sh
+		#lxc exec xsd1-1 /root/XsdK-1-Install.sh
 fi
 if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 		# currently these get blown away on a reboot
@@ -70,9 +73,9 @@ if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 
 		# sudo iptables -t nat -L -n -v
 		# use -D to remove (replaces the -A)
-		#xsd2-1
-		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 80 -j DNAT --to-destination 192.168.198.202:80
-		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 443 -j DNAT --to-destination 192.168.198.202:443
+		#xsd2.xsd1-1
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.3 --dport 80 -j DNAT --to-destination 192.168.198.64:80
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.3 --dport 443 -j DNAT --to-destination 192.168.198.64:443
 		#sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 2201 -j DNAT --to-destination 192.168.198.202:22
 fi
 if [ "$XSD_K2_INSTALL" == 'true' ]; then
@@ -86,10 +89,11 @@ if [ "$XSD_K2_INSTALL" == 'true' ]; then
 		lxc exec xsd1-2 /root/XsdK-2-Install.sh
 fi
 if [ "$XSD_K3_INSTALL" == 'true' ]; then
+		lxc launch ubuntu:16.04 xsd1-3
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-3/XsdK-3-Install.sh
 		sudo chmod +x XsdK-3-Install.sh
         lxc file push ./XsdK-3-Install.sh xsd1-3/root/
-		lxc exec xsd1-3 /root/XsdK-3-Install.sh
+		#lxc exec xsd1-3 /root/XsdK-3-Install.sh
 fi
 if [ "$XSD_K4_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-4/XsdK-4-Install.sh
