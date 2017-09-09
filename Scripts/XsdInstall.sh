@@ -102,6 +102,9 @@ if [ "$XSD_K4_INSTALL" == 'true' ]; then
         wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-4/XsdK-4-Install.sh
 		sudo chmod +x XsdK-4-Install.sh
         lxc file push ./XsdK-4-Install.sh xsd1-4/root/
+		#https://github.com/lxc/lxd
+		#lxc config set xsd1-4 security.nesting true
+		#lxc restart xsd1-4
 		#lxc exec xsd1-4 /root/XsdK-4-Install.sh
 fi
 if [ "$XSD_K5_INSTALL" == 'true' ]; then

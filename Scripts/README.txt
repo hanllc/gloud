@@ -133,8 +133,8 @@ ip addr
 //login on server
 sudo -u postgres psql postgres
 
-//login from client 
-psql -h 192.168.198.167 -U postgres -W
+
+//test from odoo box
 psql -h xsd1-3.lxd -U postgres -W
 
 //odoo
@@ -146,3 +146,5 @@ docker run -p 8069:8069 wodoo05 /odoo/odoo.py --db_user xsdodoo --db_host 192.16
 docker run -p 8069:8069 wodoo05 /odoo/odoo.py --proxy-mode --xmlrpc-port=8069 --db_user xsdodoo --db_host 192.168.198.167
 
 #http://stackoverflow.com/questions/18504835/pil-decoder-jpeg-not-available-on-ubuntu-x64
+
+docker run -p 8069:8069 xodoo001 /opt/odoo/odoo-10.0/odoo-bin --proxy-mode --xmlrpc-port=8069 --db_user xsdodoo --db_host 192.168.198.15

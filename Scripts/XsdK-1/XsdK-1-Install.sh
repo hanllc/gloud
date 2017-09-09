@@ -37,6 +37,19 @@ cp brokeravm-key.asc /etc/nginx/ssl/brokeravm.com/server.key
 #cp brokeravm-key.asc /etc/nginx/ssl/brokeravm.com/server-secure.key
 #openssl rsa -in /etc/nginx/ssl/brokeravm.com/server-secure.key -out /etc/nginx/ssl/brokeravm.com/server.key
 
+#NOTE USED NEW LETSENCRYPT cytpobot
+# https://certbot.eff.org/#ubuntuxenial-nginx
+
+apt-get install software-properties-common
+add-apt-repository ppa:certbot/certbot
+apt-get update
+apt-get install python-certbot-nginx
+
+sudo certbot --nginx certonly
+
+
+
+#config
 curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/brokeravm.com.asc
 gpg --allow-secret-key-import --import /root/instance-config-key.asc
 gpg --output brokeravm.com --decrypt brokeravm.com.asc
