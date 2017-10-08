@@ -47,7 +47,9 @@ apt-get install python-certbot-nginx
 
 sudo certbot --nginx certonly
 
-
+#move new certs files into nginx reqd locations
+cp /etc/letsencrypt/live/brokeravm.com/privkey.pem /etc/nginx/ssl/brokeravm.com/server.key
+cp /etc/letsencrypt/live/brokeravm.com/fullchain.pem /etc/nginx/ssl/brokeravm.com/server.crt
 
 #config
 curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/brokeravm.com.asc
