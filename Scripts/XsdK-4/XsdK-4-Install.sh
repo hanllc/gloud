@@ -94,3 +94,98 @@ sudo vim /etc/odoo.conf
 #steps for Wkhtmltopdf 
 https://www.linode.com/docs/websites/cms/install-odoo-10-on-ubuntu-16-04
 
+#oddo 11 attempt in new docker container
+git clone --branch 11.0 --depth 1 https://github.com/odoo/odoo.git /opt/odoo/odoo-11-0
+
+#manual docker container preparation steps
+
+#parts extracted from https://github.com/Yenthe666/InstallScript/blob/11.0/odoo_install.sh
+
+echo -e "\n--- Installing Python 3 + pip3 --"
+sudo apt-get install python3 python3-pip
+
+echo -e "\n---- Install tool packages ----"
+sudo apt-get install wget git bzr python-pip gdebi-core -y
+
+echo -e "\n---- Install python packages ----"
+sudo apt-get install python-pypdf2 python-dateutil python-feedparser python-ldap python-libxslt1 python-lxml python-mako python-openid python-psycopg2 python-pybabel python-pychart python-pydot python-pyparsing python-reportlab python-simplejson python-tz python-vatnumber python-vobject python-webdav python-werkzeug python-xlwt python-yaml python-zsi python-docutils python-psutil python-mock python-unittest2 python-jinja2 python-pypdf python-decorator python-requests python-passlib python-pil -y
+sudo pip3 install pypdf2 Babel passlib Werkzeug decorator python-dateutil pyyaml psycopg2 psutil html2text docutils lxml pillow reportlab ninja2 requests gdata XlsxWriter vobject python-openid pyparsing pydot mock mako Jinja2 ebaysdk feedparser xlwt psycogreen suds-jurko pytz pyusb greenlet xlrd 
+
+echo -e "\n---- Install python libraries ----"
+# This is for compatibility with Ubuntu 16.04. Will work on 14.04, 15.04 and 16.04
+sudo apt-get install python3-suds
+
+echo -e "\n--- Install other required packages"
+sudo apt-get install node-clean-css -y
+sudo apt-get install node-less -y
+sudo apt-get install python-gevent -y
+
+#topdf
+wget https://downloads.wkhtmltopdf.org/0.12/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb
+
+gdebi --n `basename https://downloads.wkhtmltopdf.org/0.12/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb`
+
+ln -s /usr/local/bin/wkhtmltopdf /usr/bin
+ln -s /usr/local/bin/wkhtmltoimage /usr/bin
+
+#previous container cmd python /opt/odoo/odoo-10.0/odoo-bin --proxy-mode --xmlrpc-port=8069 --db_user xsdodoo --db_host 192.168.198.15
+#don't forget to secure https://brokeravm.com/web/database/manager
+
+adduser --system --home=/opt/odoo --group odoo
+sudo chown -R odoo:odoo /opt/odoo
+mkdir /var/log/odoo
+chown -R odoo:odoo /var/log/odoo
+mkdir /opt/odoo/odoo-11-0/custom
+mkdir /opt/odoo/odoo-11-0/custom/addons
+chown -R odoo:odoo /opt/odoo/odoo-11-0/custom
+
+mkdir /etc/odoo
+printf '[options]\n' >> /etc/odoo/brokeravm.conf
+printf 'admin_passwd = FOD\n' >> /etc/odoo/brokeravm.conf
+printf 'xmlrpc_port = 8069\n' >> /etc/odoo/brokeravm.conf
+printf 'logfile = /var/log/odoo\n' >> /etc/odoo/brokeravm.conf
+printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/addons\n' >> /etc/odoo/brokeravm.conf
+
+chown -R odoo:odoo /etc/odoo
+
+#added steps here for postgres from another machine
+apt-get -q -y -u -V install postgresql-client
+apt-get -q -y -u -V  install inetutils-ping
+apt-get -q -y -u -V  install traceroute
+
+adduser --system --quiet --shell=/bin/bash --home=$OE_HOME --gecos 'ODOO' --group $OE_USER
+
+adduser --system --quiet --shell=/bin/bash --home=/opt/odoo --gecos 'ODOO' --group odoo
+
+#from postgres server
+# su - postgres -c "createuser -s xsdodoo11"
+
+#datadrive resize required
+#https://serverfault.com/questions/703471/why-isnt-my-zfs-pool-expanding-using-zfs-on-linux
+#still had to reboot and partprobe and expand after to get it see it
+
+#test exec from docker
+#runs good 
+docker exec -it -u odoo 8187a4dabe7d  /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
+
+#errors
+docker run -it -u odoo -p 8070:8069 --entrypoint="/bin/bash" xodoo11:000
+
+#never returns
+docker run -it -p 8070:8069 xodoo11:000 /bin/bash
+
+#then restart and do this to shell in
+docker start -i -a 4ca8b0e40356 
+
+#another run attempt - works and opens a shell and emacs ie term works!
+docker run -a STDIN -a STDOUT -a STDERR -it -p 8070:8069 xodoo11:000 /bin/bash
+
+#after running exec odoo[s]
+docker exec -it -u odoo 9ab2c24c2c98 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
+#still requires a chmod 755 / to run as odoo user
+
+#run detached
+docker exec --detach -u odoo 9ab2c24c2c98 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
+
+#nre launch url
+#https://www.brokeravm.com/web/database/selector

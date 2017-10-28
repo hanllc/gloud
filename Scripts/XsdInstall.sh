@@ -10,7 +10,7 @@ HOST_INSTALL="false"
 XSD_K1_INSTALL="false"
 XSD_K1_PORTFWD="false"
 XSD_K3_INSTALL="false"
-XSD_K4_INSTALL="true"
+XSD_K4_INSTALL="false"
 echo XSD startup script run parameters
 echo HOST_INSTALL: "$HOST_INSTALL"
 echo XSD_K-1_INSTALL: "$XSD_K1_INSTALL"
@@ -19,20 +19,47 @@ echo XSD_K-3_INSTALL: "$XSD_K3_INSTALL"
 echo XSD_K-4_INSTALL: "$XSD_K4_INSTALL"
 
 if [ "$HOST_INSTALL" == 'true' ]; then
+
+		#CREATE data disk
+		#I DID NOT DO ANY OF THIS DISK MOUNT ONCE USING ZFS
+		# sudo lsblk
+		# sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+		# sudo mkdir -p /mnt/disks/xsddata
+		# sudo mount -o discard,defaults /dev/sdb /mnt/disks/xsddata
+		# sudo chmod a+w /mnt/disks/xsddata
+		# sudo cp /etc/fstab /etc/fstab.backup
+		# sudo blkid /dev/sdb
+		# add into /etc/fstab
+		# UUID=845469a4-0658-4622-9bad-e61ffa57aa59 /mnt/disks/xsddata ext4 discard,defaults,nofail 0 2
+		# If you detach this persistent disk or create a snapshot from the boot disk for this instance, edit the /etc/fstab file and remove the 
+		# entry for this persistent disk. Even with the nofail or nobootwait options in place, keep the /etc/fstab file in sync with the 
+		# devices that are attached to your instance and remove these entries before you create your boot disk snapshot or when you detach 
+		# persistent disks.
+
         #download only use -d with apt-get                                                                      
-        #sudo apt-get -q -y -u update
-        #sudo apt-get -q -y -u -V dist-upgrade
+        # sudo apt-get -q -y -u update
+        # sudo apt-get -q -y -u -V dist-upgrade
 		#emacs                                                                                                  
         sudo apt-get -q -y -u -V install emacs24-nox
+		#zfs
+		sudo apt install zfs
+		sudo zpool status
+		parted /dev/sdb -- mklabel GPT then q
+		sudo zpool create xsdpool /dev/sdb
+
+
 		#bridge for containers - only needed without NATed lxdbr0 - was never able to get pure bridge or macvlan working
 		#sudo apt-get install bridge-utils
 		# https://github.com/tych0/tycho.ws/blob/master/src/blog/2016/04/lxdbr0.md
         #lxd system
         #sudo apt-get -q -y -u -V install lxd
 		sudo wget https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/lxd-bridge
-		sudo mv /etc/default/lxd-bridge /etc/default/orig-lxd-bridge
+		sudo mv /etc/default/lxd-bridge /etc/default/lxd-bridge.origcopy
 		sudo cp ./lxd-bridge /etc/default/lxd-bridge
-		sudo lxd init --auto --storage-backend=dir
+		
+
+		#sudo lxd init --auto --storage-backend=dir
+		sudo lxd init --auto --storage-backend=zfs --storage-pool xsdpool
 		sudo service lxd-bridge stop && sudo service lxd restart
 		
 		#dev web
@@ -76,9 +103,13 @@ if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 		# sudo iptables -t nat -L -n -v
 		# use -D to remove (replaces the -A)
 		#xsd2.xsd1-1
-		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.3 --dport 80 -j DNAT --to-destination 192.168.198.64:80
-		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.3 --dport 443 -j DNAT --to-destination 192.168.198.64:443
+		#sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.3 --dport 80 -j DNAT --to-destination 192.168.198.64:80
+		#sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.3 --dport 443 -j DNAT --to-destination 192.168.198.64:443
 		#sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 2201 -j DNAT --to-destination 192.168.198.202:22
+		#new xsd1.xsd1-1
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 80 -j DNAT --to-destination 192.168.198.64:80
+		sudo iptables -t nat -A	PREROUTING -i ens4 -p tcp -d 192.168.199.2 --dport 443 -j DNAT --to-destination 192.168.198.64:443
+		
 fi
 if [ "$XSD_K2_INSTALL" == 'true' ]; then
 # added 512m swap to HOSt to get polymer-cli to install in the container

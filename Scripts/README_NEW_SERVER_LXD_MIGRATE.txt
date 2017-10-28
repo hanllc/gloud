@@ -15,7 +15,9 @@ lxc config set core.trust_password weh69rli
 lxc config set core.https_address [::]:8443
 
 //lxc remote add foo 1.2.3.4
-lxc remote add xsd2 192.168.199.3
+//lxc remote add xsd2 192.168.199.3
+lxc remote add xsd1 192.168.199.2
+
 
 //failed so we 
 //added firewall rule personal network google network to allow 8443
@@ -35,3 +37,8 @@ lxc copy xsd1-3 xsd2:xsd2-3
 lxc copy xsd1-4 xsd2:xsd2-4
 lxc copy xsd1-5 xsd2:xsd2-5
  
+ //move to xsd1 from xsd2
+lxc copy xsd1-1 xsd1:xsd1-1
+lxc copy xsd1-3 xsd1:xsd1-3
+lxc copy xsd1-4 xsd1:xsd1-4
+lxc copy xsd2-5 xsd2:xsd1-5

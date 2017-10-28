@@ -11,6 +11,17 @@ gcloud compute instances list
 //removed after adding to see if fix routing
 gcloud compute instances create xsd1 --zone us-central1-c --network personal --can-ip-forward --image "/ubuntu-os-cloud/ubuntu-1604-xenial-v20160420c" --machine-type f1-micro --boot-disk-type pd-standard --boot-disk-size 10GB --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
 
+//create xsd server - 10/15/2017
+gcloud compute disks create xsd1data --zone us-central1-c --size 20GB --type pd-standard
+
+gcloud compute instances create xsd1 \
+    --zone us-central1-c --network personal --can-ip-forward --no-boot-disk-auto-delete --image-project "ubuntu-os-cloud" --image "ubuntu-1604-xenial-v20171011" --machine-type g1-small \
+    --boot-disk-type pd-standard --boot-disk-size 10GB --no-scopes
+
+    --metadata-from-file startup-script=C:\Users\wehrli\Source\Repos\gcloud\Scripts\XsdInstall.sh
+
+gcloud compute instances attach-disk xsd1 --zone us-central1-c --disk xsd1data 
+
 //nuke
 gcloud compute instances delete xsd1 --zone us-central1-c
 
@@ -56,6 +67,9 @@ gcloud compute project-info add-metadata --metadata-from-file brokeravmkey=C:\Us
 // https://linuxcontainers.org/lxd/getting-started-cli/
 //|             ALIAS               | FINGERPRINT  | PUBLIC |                   DESCRIPTION                   |  ARCH   |   SIZE   |          UPLOAD DATE       
 // #| t/i386/20160222 (4 more)      | 7abf249f6516 | yes    | ubuntu 14.04 LTS i386 (release) (20160222)      | i686    | 117.08MB | Feb 22, 2016 at 12:00am (UTC) |
+
+https://www.hastexo.com/blogs/florian/2016/02/21/containers-just-because-everyone-else/
+https://www.flockport.com/experimenting-with-overlayfs-and-lxc/
 
 lxc launch ubuntu:14.04 xsd1-1
 
@@ -147,4 +161,11 @@ docker run -p 8069:8069 wodoo05 /odoo/odoo.py --proxy-mode --xmlrpc-port=8069 --
 
 #http://stackoverflow.com/questions/18504835/pil-decoder-jpeg-not-available-on-ubuntu-x64
 
-docker run -p 8069:8069 xodoo001 /opt/odoo/odoo-10.0/odoo-bin --proxy-mode --xmlrpc-port=8069 --db_user xsdodoo --db_host 192.168.198.15
+docker run -p 8069:8069 XXXX /opt/odoo/odoo-10.0/odoo-bin --proxy-mode --xmlrpc-port=8069 --db_user xsdodoo --db_host 192.168.198.15
+
+#DISK User
+#find largest directories
+
+sudo du -hsx /* | sort -rh | head -n 40
+sudo du -hsx /var/* | sort -rh | head -n 40
+sudo du -hsx /var/lib/* | sort -rh | head -n 40
