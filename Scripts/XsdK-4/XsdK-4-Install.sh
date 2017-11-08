@@ -198,11 +198,11 @@ docker start -i -a 76f2a1643e08
 #still requires a chmod 755 / to run as odoo user
 
 #run detached
-docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --dbfilter wehrli-002 --config /etc/odoo/wehrli.conf --db_user xsdodoo11 --db_host 192.168.198.15
+docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --db-filter wehrli-002 --config /etc/odoo/wehrli.conf --db_user xsdodoo11 --db_host 192.168.198.15
 
-docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --dbfilter brokeravm-002 --config /etc/odoo/brokeravm.conf --db_user xsdodoo11avm --db_host 192.168.198.15
+docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --db-filter brokeravm-002 --config /etc/odoo/brokeravm.conf --db_user xsdodoo11avm --db_host 192.168.198.15
 
-docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --dbfilter xsdlive-000 --config /etc/odoo/xsdlive.conf --db_user xsdodoo11xsd --db_host 192.168.198.15
+docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --db-filter xsdlive-000 --config /etc/odoo/xsdlive.conf --db_user xsdodoo11xsd --db_host 192.168.198.15
 
 #nre launch url
 #https://www.brokeravm.com/web/database/selector
