@@ -23,6 +23,9 @@ cd /pdata/web/
 git clone https://github.com/hanllc/mrk.brokeravm.com.git brokeravm.com
 
 mkdir -p /etc/nginx/ssl/brokeravm.com
+mkdir -p /etc/nginx/ssl/wehrli.org
+mkdir -p /etc/nginx/ssl/xsdlive.com
+
 # ssl_certificate     /etc/nginx/ssl/brokeravm.com/server.crt;
 # ssl_certificate_key /etc/nginx/ssl/brokeravm.com/server.key;
 # openssl req -newkey rsa:2048 -keyout brokeravm.key -out brokeravm.csr
@@ -45,19 +48,32 @@ add-apt-repository ppa:certbot/certbot
 apt-get update
 apt-get install python-certbot-nginx
 
+## this runs it
 sudo certbot --nginx certonly
 
 #move new certs files into nginx reqd locations
 cp /etc/letsencrypt/live/brokeravm.com/privkey.pem /etc/nginx/ssl/brokeravm.com/server.key
 cp /etc/letsencrypt/live/brokeravm.com/fullchain.pem /etc/nginx/ssl/brokeravm.com/server.crt
 
+#hack till new certs
+cp /etc/letsencrypt/live/wehrli.org/privkey.pem /etc/nginx/ssl/wehrli.org/server.key
+cp /etc/letsencrypt/live/wehrli.org/fullchain.pem /etc/nginx/ssl/wehrli.org/server.crt
+
+cp /etc/letsencrypt/live/xsdlive.com/privkey.pem /etc/nginx/ssl/xsdlive.com/server.key
+cp /etc/letsencrypt/live/xsdlive.com/fullchain.pem /etc/nginx/ssl/xsdlive.com/server.crt
+
+
 #config
 curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/brokeravm.com.asc
 gpg --allow-secret-key-import --import /root/instance-config-key.asc
 gpg --output brokeravm.com --decrypt brokeravm.com.asc
 cp brokeravm.com /etc/nginx/sites-available/brokeravm.com
-ln -s /etc/nginx/sites-available/brokeravm.com /etc/nginx/sites-enabled/brokeravm.com
 
+#need other site setups placed in git encrypted
+
+ln -s /etc/nginx/sites-available/brokeravm.com /etc/nginx/sites-enabled/brokeravm.com
+ln -s /etc/nginx/sites-available/wehrli.org /etc/nginx/sites-enabled/wehrli.org
+ln -s /etc/nginx/sites-available/xsdlive.com /etc/nginx/sites-enabled/xsdlive.com
 
 mv /etc/nginx/sites-enabled/default /root
 

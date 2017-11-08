@@ -7,7 +7,7 @@ gcloud compute instances create xsd2 --zone us-central1-c --network personal --c
 
 //on new server
 lxc config set core.https_address [::]:8443
-lxc config set core.trust_password weh69rli
+lxc config set core.trust_password FOD
 
 
 

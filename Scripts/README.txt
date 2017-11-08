@@ -103,6 +103,12 @@ gpg --delete-secret-keys xsdlive
 gpg --delete-key xsdlive
 
 
+//cerbot
+
+//view current certificates on server
+certbot certificates
+
+
 //nginx
 sudo nginx -s reload
 nginx -t
@@ -150,6 +156,14 @@ sudo -u postgres psql postgres
 
 //test from odoo box
 psql -h xsd1-3.lxd -U postgres -W
+
+//show all roles
+\du
+\du+
+
+//show all database
+\l
+\l+
 
 //odoo
 ./odoo.py --config ./wehrli.org.conf --proxy-mode --xmlrpc-port=8071 --logfile /var/log/wehrli.org/odoo.log --db_user xxx --db_password xxx

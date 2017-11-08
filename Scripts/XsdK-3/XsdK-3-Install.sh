@@ -6,6 +6,9 @@ sudo apt-get -q -y -u -V install emacs24-nox
 apt-get install postgresql-9.5
 #sudo su - postgres -c "createuser -s $USER"
 sudo su - postgres -c "createuser -s xsdodoo"
+sudo su - postgres -c "createuser -s xsdodoo11"
+sudo su - postgres -c "createuser -s xsdodoo11avm"
+sudo su - postgres -c "createuser -s xsdodoo11xsd"
 
 #https://www.postgresql.org/docs/9.5/static/app-psql.html
 #https://help.ubuntu.com/lts/serverguide/postgresql.html

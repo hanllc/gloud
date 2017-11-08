@@ -135,16 +135,32 @@ adduser --system --home=/opt/odoo --group odoo
 sudo chown -R odoo:odoo /opt/odoo
 mkdir /var/log/odoo
 chown -R odoo:odoo /var/log/odoo
-mkdir /opt/odoo/odoo-11-0/custom
-mkdir /opt/odoo/odoo-11-0/custom/addons
+
+
+mkdir --parents /opt/odoo/odoo-11-0/custom/wehrli.com/addons
+mkdir --parents /opt/odoo/odoo-11-0/custom/xsdlive.com/addons
+mkdir --parents /opt/odoo/odoo-11-0/custom/brokeravm.com/addons
 chown -R odoo:odoo /opt/odoo/odoo-11-0/custom
 
 mkdir /etc/odoo
+
 printf '[options]\n' >> /etc/odoo/brokeravm.conf
 printf 'admin_passwd = FOD\n' >> /etc/odoo/brokeravm.conf
-printf 'xmlrpc_port = 8069\n' >> /etc/odoo/brokeravm.conf
-printf 'logfile = /var/log/odoo\n' >> /etc/odoo/brokeravm.conf
-printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/addons\n' >> /etc/odoo/brokeravm.conf
+printf 'xmlrpc_port = 8071\n' >> /etc/odoo/brokeravm.conf
+printf 'logfile = /var/log/odoo/brokeravm.log\n' >> /etc/odoo/brokeravm.conf
+printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/brokeravm.com/addons\n' >> /etc/odoo/brokeravm.conf
+
+printf '[options]\n' >> /etc/odoo/xsdlive.conf
+printf 'admin_passwd = FOD\n' >> /etc/odoo/xsdlive.conf
+printf 'xmlrpc_port = 8072\n' >> /etc/odoo/xsdlive.conf
+printf 'logfile = /var/log/odoo/xsdlive.log\n' >> /etc/odoo/xsdlive.conf
+printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/xsdlive.com/addons\n' >> /etc/odoo/xsdlive.conf
+
+printf '[options]\n' >> /etc/odoo/wehrli.conf
+printf 'admin_passwd = FOD\n' >> /etc/odoo/wehrli.conf
+printf 'xmlrpc_port = 8073\n' >> /etc/odoo/wehrli.conf
+printf 'logfile = /var/log/odoo/wehrli.log\n' >> /etc/odoo/wehrli.conf
+printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/wehrli.org/addons\n' >> /etc/odoo/wehrli.conf
 
 chown -R odoo:odoo /etc/odoo
 
@@ -165,27 +181,34 @@ adduser --system --quiet --shell=/bin/bash --home=/opt/odoo --gecos 'ODOO' --gro
 #still had to reboot and partprobe and expand after to get it see it
 
 #test exec from docker
-#runs good 
+#runs interactively 
 docker exec -it -u odoo 8187a4dabe7d  /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
 
-#errors
-docker run -it -u odoo -p 8070:8069 --entrypoint="/bin/bash" xodoo11:000
 
-#never returns
-docker run -it -p 8070:8069 xodoo11:000 /bin/bash
 
-#then restart and do this to shell in
-docker start -i -a 4ca8b0e40356 
+#container bootstrap process -- works and opens a shell and emacs ie term works
+docker run -a STDIN -a STDOUT -a STDERR -it -p 8070-8075:8070-8075 xodoo11:001 /bin/bash
 
-#another run attempt - works and opens a shell and emacs ie term works!
-docker run -a STDIN -a STDOUT -a STDERR -it -p 8070:8069 xodoo11:000 /bin/bash
+
+#then restart if init shell exits and do this to shell in
+docker start -i -a 76f2a1643e08 
 
 #after running exec odoo[s]
-docker exec -it -u odoo 9ab2c24c2c98 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
+#docker exec -it -u odoo 9ab2c24c2c98 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
 #still requires a chmod 755 / to run as odoo user
 
 #run detached
-docker exec --detach -u odoo 9ab2c24c2c98 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
+docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --dbfilter wehrli-002 --config /etc/odoo/wehrli.conf --db_user xsdodoo11 --db_host 192.168.198.15
+
+docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --dbfilter brokeravm-002 --config /etc/odoo/brokeravm.conf --db_user xsdodoo11avm --db_host 192.168.198.15
+
+docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --dbfilter xsdlive-000 --config /etc/odoo/xsdlive.conf --db_user xsdodoo11xsd --db_host 192.168.198.15
 
 #nre launch url
 #https://www.brokeravm.com/web/database/selector
+
+#bootstrap odoo
+#https://usr-src.org/blog/2016/03/bootstrap-odoo-database/
+
+#detailed docu
+#https://media.readthedocs.org/pdf/odoo-development/latest/odoo-development.pdf
