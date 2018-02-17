@@ -14,6 +14,8 @@ apt-get -q -y -u -V install spawn-fcgi
 
 apt-get -q -y -y -V install swi-prolog-nox
 
+apt-get -q -y -y -V install r-base r-base-dev
+
 wget https://bruda.ca/_media/emacs/prolog.el
 
 git clone https://github.com/hanllc/appsrv.git
@@ -30,3 +32,5 @@ ln -s /etc/nginx/sites-available/brokeravm.com /etc/nginx/sites-enabled/brokerav
 chmod 775 /root
 chmod 775 /root/appsrv
 chmod -R 775 /root/appsrv/ecma
+
+

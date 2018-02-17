@@ -25,6 +25,7 @@ git clone https://github.com/hanllc/mrk.brokeravm.com.git brokeravm.com
 mkdir -p /etc/nginx/ssl/brokeravm.com
 mkdir -p /etc/nginx/ssl/wehrli.org
 mkdir -p /etc/nginx/ssl/xsdlive.com
+mkdir -p /etc/nginx/ssl/cama.wehrli.org
 
 # ssl_certificate     /etc/nginx/ssl/brokeravm.com/server.crt;
 # ssl_certificate_key /etc/nginx/ssl/brokeravm.com/server.key;
@@ -62,8 +63,10 @@ cp /etc/letsencrypt/live/wehrli.org/fullchain.pem /etc/nginx/ssl/wehrli.org/serv
 cp /etc/letsencrypt/live/xsdlive.com/privkey.pem /etc/nginx/ssl/xsdlive.com/server.key
 cp /etc/letsencrypt/live/xsdlive.com/fullchain.pem /etc/nginx/ssl/xsdlive.com/server.crt
 
+cp /etc/letsencrypt/live/cama.wehrli.org/privkey.pem /etc/nginx/ssl/cama.wehrli.org/server.key
+cp /etc/letsencrypt/live/cama.wehrli.org/fullchain.pem /etc/nginx/ssl/cama.wehrli.org/server.crt
 
-#config
+#config A BUNCH OF MANUAL UPDATES NEED TO PUT IN GIT ENCR
 curl -o /root/brokeravm.com.asc https://raw.githubusercontent.com/hanllc/gloud/master/Scripts/XsdK-1/brokeravm.com.asc
 gpg --allow-secret-key-import --import /root/instance-config-key.asc
 gpg --output brokeravm.com --decrypt brokeravm.com.asc
@@ -74,6 +77,8 @@ cp brokeravm.com /etc/nginx/sites-available/brokeravm.com
 ln -s /etc/nginx/sites-available/brokeravm.com /etc/nginx/sites-enabled/brokeravm.com
 ln -s /etc/nginx/sites-available/wehrli.org /etc/nginx/sites-enabled/wehrli.org
 ln -s /etc/nginx/sites-available/xsdlive.com /etc/nginx/sites-enabled/xsdlive.com
+ln -s /etc/nginx/sites-available/org.xsdlive.com /etc/nginx/sites-enabled/org.xsdlive.com
+ln -s /etc/nginx/sites-available/cama.wehrli.org /etc/nginx/sites-enabled/cama.wehrli.org
 
 mv /etc/nginx/sites-enabled/default /root
 

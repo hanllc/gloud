@@ -140,6 +140,7 @@ chown -R odoo:odoo /var/log/odoo
 mkdir --parents /opt/odoo/odoo-11-0/custom/wehrli.com/addons
 mkdir --parents /opt/odoo/odoo-11-0/custom/xsdlive.com/addons
 mkdir --parents /opt/odoo/odoo-11-0/custom/brokeravm.com/addons
+mkdir --parents /opt/odoo/odoo-11-0/custom/cama/addons
 chown -R odoo:odoo /opt/odoo/odoo-11-0/custom
 
 mkdir /etc/odoo
@@ -161,6 +162,12 @@ printf 'admin_passwd = FOD\n' >> /etc/odoo/wehrli.conf
 printf 'xmlrpc_port = 8073\n' >> /etc/odoo/wehrli.conf
 printf 'logfile = /var/log/odoo/wehrli.log\n' >> /etc/odoo/wehrli.conf
 printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/wehrli.org/addons\n' >> /etc/odoo/wehrli.conf
+
+printf '[options]\n' >> /etc/odoo/cama.conf
+printf 'admin_passwd = xsd1-4.lxd\n' >> /etc/odoo/cama.conf
+printf 'xmlrpc_port = 8074\n' >> /etc/odoo/cama.conf
+printf 'logfile = /var/log/odoo/cama.log\n' >> /etc/odoo/cama.conf
+printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/cama/addons\n' >> /etc/odoo/cama.conf
 
 chown -R odoo:odoo /etc/odoo
 
@@ -190,12 +197,15 @@ docker exec -it -u odoo 8187a4dabe7d  /opt/odoo/odoo-11-0/odoo-bin --proxy-mode 
 docker run -a STDIN -a STDOUT -a STDERR -it -p 8070-8075:8070-8075 xodoo11:001 /bin/bash
 
 
-#then restart if init shell exits and do this to shell in
-docker start -i -a 76f2a1643e08 
+#then restart
+docker start 76f2a1643e08 
 
 #after running exec odoo[s]
 #docker exec -it -u odoo 9ab2c24c2c98 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --config /etc/odoo/brokeravm.conf --db_user xsdodoo11 --db_host 192.168.198.15
 #still requires a chmod 755 / to run as odoo user
+
+#run shell without killing docker on exit
+docker exec -it 76f2a1643e08 /bin/bash 
 
 #run detached
 docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --db-filter wehrli-002 --config /etc/odoo/wehrli.conf --db_user xsdodoo11 --db_host 192.168.198.15
@@ -204,11 +214,25 @@ docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-m
 
 docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --db-filter xsdlive-000 --config /etc/odoo/xsdlive.conf --db_user xsdodoo11xsd --db_host 192.168.198.15
 
+docker exec --detach -u odoo 76f2a1643e08 /opt/odoo/odoo-11-0/odoo-bin --proxy-mode --db-filter cama-000 --config /etc/odoo/cama.conf --db_user xsdodoo11 --db_host 192.168.198.15
+
 #nre launch url
-#https://www.brokeravm.com/web/database/selector
+# https://www.brokeravm.com/web/database/selector
 
 #bootstrap odoo
-#https://usr-src.org/blog/2016/03/bootstrap-odoo-database/
+# https://usr-src.org/blog/2016/03/bootstrap-odoo-database/
 
 #detailed docu
-#https://media.readthedocs.org/pdf/odoo-development/latest/odoo-development.pdf
+# https://media.readthedocs.org/pdf/odoo-development/latest/odoo-development.pdf
+
+#OCA module template
+# https://github.com/OCA/maintainer-tools/tree/master/template
+
+# OCA site
+# https://odoo-community.org/
+
+# python emacs
+# https://realpython.com/blog/python/emacs-the-best-python-editor/
+ touch ~/.emacs.d/init.el
+
+

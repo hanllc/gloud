@@ -112,6 +112,7 @@ if [ "$XSD_K1_PORTFWD" == 'true' ]; then
 		
 fi
 if [ "$XSD_K2_INSTALL" == 'true' ]; then
+		lxc launch ubuntu:16.04 xsd1-2
 # added 512m swap to HOSt to get polymer-cli to install in the container
 # hopefully only needed one time - did not make permanent
 # https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
@@ -120,6 +121,8 @@ if [ "$XSD_K2_INSTALL" == 'true' ]; then
 		sudo chmod +x XsdK-2-Install.sh
         lxc file push ./XsdK-2-Install.sh xsd1-2/root/
 		lxc exec xsd1-2 /root/XsdK-2-Install.sh
+
+
 fi
 if [ "$XSD_K3_INSTALL" == 'true' ]; then
 		lxc launch ubuntu:16.04 xsd1-3

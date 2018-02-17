@@ -51,3 +51,24 @@ sudo apt-get install -f
 #MANUAL STEP hack chrome start to make run at root
 # https://ubuntuforums.org/showthread.php?t=1743565
 
+
+
+#REBIRTHED NODE CONTAINER
+apt-get -q -y -u update
+apt-get -q -y -u -V dist-upgrade
+sudo apt-get -q -y -u -V install emacs24-nox
+sudo apt-get install git
+
+#SEE
+#https://nodejs.org/en/download/package-manager/
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y build-essential
+
+mkdir -p /root/ts/tsmismocom
+cd /root/ts/tsmismocom
+git init
+
+#JVM
+sudo apt-get install default-jdk
+sudo apt-get install scala

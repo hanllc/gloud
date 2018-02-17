@@ -79,6 +79,9 @@ lxc exec xsd1-1 /bin/bash
 //see remote list
 lxc remote list
 
+//snapshot lxc container
+
+
 //gpg
 //see https://www.madboa.com/geek/gpg-quickstart/
 
