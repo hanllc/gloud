@@ -164,7 +164,7 @@ printf 'logfile = /var/log/odoo/wehrli.log\n' >> /etc/odoo/wehrli.conf
 printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/wehrli.org/addons\n' >> /etc/odoo/wehrli.conf
 
 printf '[options]\n' >> /etc/odoo/cama.conf
-printf 'admin_passwd = xsd1-4.lxd\n' >> /etc/odoo/cama.conf
+printf 'admin_passwd = xsd1-n._xd\n' >> /etc/odoo/cama.conf
 printf 'xmlrpc_port = 8074\n' >> /etc/odoo/cama.conf
 printf 'logfile = /var/log/odoo/cama.log\n' >> /etc/odoo/cama.conf
 printf 'addons_path = /opt/odoo/odoo-11-0/addons,/opt/odoo/odoo-11-0/custom/cama/addons\n' >> /etc/odoo/cama.conf
